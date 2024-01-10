@@ -20,5 +20,5 @@ $(EXECUTABLE): $(SRC) $(HEADER)
 clean:
 	rm -f $(EXECUTABLE)
 
-run:
+run: $(EXECUTABLE)
 	./$(EXECUTABLE) $(ARG)
