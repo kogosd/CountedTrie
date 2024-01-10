@@ -5,7 +5,7 @@ CXX := g++
 CXXFLAGS := -Wall -Wextra -std=c++2a
 
 # Source file and output executable
-SRC := countedtrie.cpp 
+SRC := countedtrie.cpp test.cpp
 EXECUTABLE := countedtrie
 HEADER := util.h
 
@@ -13,8 +13,8 @@ HEADER := util.h
 all: $(EXECUTABLE)
 
 # Rule to build the executable
-$(EXECUTABLE): $(SRC) $(HEADER)
-	$(CXX) $(CXXFLAGS) $< -o $@
+$(EXECUTABLE): $(SRC) 
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 # Clean target to remove the executable
 clean:
