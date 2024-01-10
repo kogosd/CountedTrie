@@ -1,6 +1,6 @@
 # CountedTrie
 
-Stores positive numbers in logarithmic time
+Stores positive numbers in log time
 
 Retrieves count of num in log time
 
