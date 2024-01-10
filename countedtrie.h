@@ -20,12 +20,12 @@ struct CountedTrieNode {
   unique_ptr<CountedTrieNode> children[10];
   void add() { ++count; }
 
-  void print(int indent = 0) {
-    cout << "count: " << count << endl;
+  void print(ostream& o = cout, int indent = 0) {
+    o << "count: " << count << endl;
     for (int i = 0; i < 10; ++i) {
       if (children[i].get() == nullptr) continue;
-      cout << string(indent, ' ') << i << ":";
-      children[i]->print(indent + 1);
+      o << string(indent, ' ') << i << ":";
+      children[i]->print(o, indent + 1);
     }
   }
 };
@@ -112,7 +112,7 @@ struct CountedTrie {
         }
       }
     }
-    cerr << "currcount: " << currcount << "/" << count << endl;
+    if (debug) cerr << "currcount: " << currcount << "/" << count << endl;
     return getNum(a);
   }
 
@@ -132,8 +132,8 @@ struct CountedTrie {
     return total;
   }
 
-  void print() {
-    cout << "CountedTrie: Count: " << count << endl;
-    root.print();
+  void print(ostream& o = cout) {
+    o << "CountedTrie: Count: " << count << endl;
+    root.print(o);
   }
 };
