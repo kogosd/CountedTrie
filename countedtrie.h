@@ -30,14 +30,14 @@ struct CountedTrieNode {
   }
 };
 
-template<int SIZE>
+template<uint8_t SIZE>
 struct CountedTrie {
   CountedTrieNode<SIZE> root;
-  int count{0};
+  uint64_t count{0};
 
-  array<uint8_t, SIZE> getArray(int num) {
+  array<uint8_t, SIZE> getArray(uint64_t num) {
     array<uint8_t, SIZE> a{0};
-    int index{0};
+    uint8_t index{0};
     while (num) {
       a[index++] = num % 10;
       num /= 10;
@@ -46,15 +46,15 @@ struct CountedTrie {
     return a;
   }
 
-  int getNum(array<uint8_t, SIZE> &a) {
-    int num = 0;
+  uint64_t getNum(array<uint8_t, SIZE> &a) {
+    uint64_t num = 0;
     for (int i = 0; i < SIZE; ++i) {
       num = num * 10 + a[i];
     }
     return num;
   }
 
-  void add(int num) {
+  void add(uint64_t num) {
     CountedTrieNode<SIZE> *curr = &root;
     auto a = getArray(num);
     ++count;
@@ -70,7 +70,7 @@ struct CountedTrie {
     }
   }
 
-  int find(int num) {
+  uint64_t find(uint64_t num) {
     auto a = getArray(num);
     CountedTrieNode<SIZE> *curr = &root;
     for (int i = 0; i < SIZE; ++i) {
@@ -91,13 +91,13 @@ struct CountedTrie {
   }
 
   double percentile(double p) {
-    int targetindex = count * p;
+    uint64_t targetindex = count * p;
     return get(targetindex);
   }
 
-  int get(int target) {
+  uint64_t get(uint64_t target) {
     CountedTrieNode<SIZE> *curr = &root;
-    int currcount{0};
+    uint64_t currcount{0};
     array<uint8_t, SIZE> a{0};
     for (int j = 0; j < SIZE; ++j) {
       a[j] = 0;
@@ -116,10 +116,10 @@ struct CountedTrie {
     return getNum(a);
   }
 
-  int findLessOrEqual(int num) {
+  uint64_t findLessOrEqual(uint64_t num) {
     auto a = getArray(num);
     CountedTrieNode<SIZE> *curr = &root;
-    int total{0};
+    uint64_t total{0};
     for (int i = 0; i < SIZE; ++i) {
       for (int j = 0; j < a[i]; ++j) {
         if (curr->children[j].get() == nullptr) continue;

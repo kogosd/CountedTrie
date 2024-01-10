@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
   CountedTrie<18> ct;
   for (int i = 0; i < 1'000; ++i) ct.add(rand()%100);
 
-  int target = 50;
+  uint64_t target = 25;
   auto rc = ct.findLessOrEqual(target);
   cout << "LessOrEqual than: " << target << " is: " << rc << endl;
 
