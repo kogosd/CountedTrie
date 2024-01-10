@@ -3,19 +3,10 @@
 #include <array>
 #include <random>
 #include <time.h>
+#include "util.h"
 using namespace std;
 
 bool debug{false};
-
-uint64_t getNanos() {
-    struct timespec start;
-    if( clock_gettime( CLOCK_REALTIME, &start) == -1 ) {
-      perror( "clock gettime" );
-      exit( EXIT_FAILURE );
-    }
-    return start.tv_sec*1'000'000'000 + start.tv_nsec;
-}
-
 
 struct CountedTrieNode
 {
@@ -155,7 +146,7 @@ struct CountedTrie
 
     void print()
     {
-        cout << "Count: " << count << endl;
+        cout << "CountedTrie: Count: " << count << endl;
         root.print();
     }
 };
@@ -164,11 +155,14 @@ void test()
 {
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    if (argc>1 and string(argv[1]) == "debug") {
+        debug = true;
+    }
     srand(time(NULL));
     CountedTrie ct;
-    for (int i = 0; i < 1'000'001; ++i)  ct.add(i);
+    for (int i = 0; i < 10; ++i)  ct.add(i);
 
     if (debug)
         ct.print();
@@ -177,12 +171,12 @@ int main()
     auto t1 = getNanos();
     auto med = ct.median();
     auto t2 = getNanos();
-    cout << "med=" << med << ": " << (t2-t1) << endl;
+    cout << "med=" << med << "time: " << (t2-t1) << endl;
 
     cout << "starting find\n";
     t1 = getNanos();
     auto f1000 = ct.find(1000);
     t2 = getNanos();
-    cout << "f1000: " << f1000 << (t2-t1) << endl;
+    cout << "f1000: " << f1000 << ", time: " << (t2-t1) << endl;
     return 0;
 }
