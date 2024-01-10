@@ -14,7 +14,7 @@ using namespace std;
 
 extern bool debug;
 
-template<int SIZE=10>
+template<int SIZE>
 struct CountedTrieNode {
   int count{0};
   unique_ptr<CountedTrieNode> children[10];
