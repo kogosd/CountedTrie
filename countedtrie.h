@@ -16,7 +16,7 @@ extern bool debug;
 
 template<int SIZE>
 struct CountedTrieNode {
-  int count{0};
+  uint64_t count{0};
   unique_ptr<CountedTrieNode> children[10];
   void add() { ++count; }
 

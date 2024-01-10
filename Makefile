@@ -7,7 +7,7 @@ CXXFLAGS := -Wall -Wextra -std=c++2a
 # Source file and output executable
 SRC := countedtrie.cpp test.cpp
 EXECUTABLE := countedtrie
-HEADER := util.h
+HEADER := util.h countedtrie.h test.h
 OBJ := $(SRC:.cpp=.o)  # Object files
 
 
@@ -15,7 +15,7 @@ OBJ := $(SRC:.cpp=.o)  # Object files
 all: $(EXECUTABLE)
 
 # Rule to build the executable
-$(EXECUTABLE): $(SRC) 
+$(EXECUTABLE): $(OBJ) 
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 # Rule to generate object files
