@@ -15,10 +15,10 @@ int main(int argc, char **argv) {
 
   //test current feature
   srand(time(NULL));
-  CountedTrie ct;
-  for (int i = 0; i < 1'000'000; ++i) ct.add(99+rand()%100);
+  CountedTrie<18> ct;
+  for (int i = 0; i < 1'000; ++i) ct.add(rand()%100);
 
-  int target = 100;
+  int target = 50;
   auto rc = ct.findLessOrEqual(target);
   cout << "LessOrEqual than: " << target << " is: " << rc << endl;
 

@@ -14,6 +14,7 @@ using namespace std;
 
 extern bool debug;
 
+template<int SIZE=10>
 struct CountedTrieNode {
   int count{0};
   unique_ptr<CountedTrieNode> children[10];
@@ -29,12 +30,13 @@ struct CountedTrieNode {
   }
 };
 
+template<int SIZE>
 struct CountedTrie {
-  CountedTrieNode root;
+  CountedTrieNode<SIZE> root;
   int count{0};
 
-  array<int, 10> getArray(int num) {
-    array<int, 10> a{0};
+  array<uint8_t, SIZE> getArray(int num) {
+    array<uint8_t, SIZE> a{0};
     int index{0};
     while (num) {
       a[index++] = num % 10;
@@ -44,24 +46,24 @@ struct CountedTrie {
     return a;
   }
 
-  int getNum(array<int, 10> &a) {
+  int getNum(array<uint8_t, SIZE> &a) {
     int num = 0;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < SIZE; ++i) {
       num = num * 10 + a[i];
     }
     return num;
   }
 
   void add(int num) {
-    CountedTrieNode *curr = &root;
+    CountedTrieNode<SIZE> *curr = &root;
     auto a = getArray(num);
     ++count;
     curr->add();
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < SIZE; ++i) {
       if (debug) cout << "a[" << i << "] = " << a[i] << endl;
       if (curr->children[a[i]] == nullptr) {
         curr->children[a[i]] =
-            unique_ptr<CountedTrieNode>(new CountedTrieNode());
+            unique_ptr<CountedTrieNode<SIZE>>(new CountedTrieNode<SIZE>());
       }
       curr = curr->children[a[i]].get();
       curr->add();
@@ -70,8 +72,8 @@ struct CountedTrie {
 
   int find(int num) {
     auto a = getArray(num);
-    CountedTrieNode *curr = &root;
-    for (int i = 0; i < 10; ++i) {
+    CountedTrieNode<SIZE> *curr = &root;
+    for (int i = 0; i < SIZE; ++i) {
       if (curr->children[a[i]] == nullptr) return 0;
       curr = curr->children[a[i]].get();
     }
@@ -94,10 +96,10 @@ struct CountedTrie {
   }
 
   int get(int target) {
-    CountedTrieNode *curr = &root;
+    CountedTrieNode<SIZE> *curr = &root;
     int currcount{0};
-    array<int, 10> a{0};
-    for (int j = 0; j < 10; ++j) {
+    array<uint8_t, SIZE> a{0};
+    for (int j = 0; j < SIZE; ++j) {
       a[j] = 0;
       for (int i = 0; i < 10; ++i) {
         if (curr->children[i] == nullptr) continue;
@@ -116,9 +118,9 @@ struct CountedTrie {
 
   int findLessOrEqual(int num) {
     auto a = getArray(num);
-    CountedTrieNode *curr = &root;
+    CountedTrieNode<SIZE> *curr = &root;
     int total{0};
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < SIZE; ++i) {
       for (int j = 0; j < a[i]; ++j) {
         if (curr->children[j].get() == nullptr) continue;
         if (debug) cerr << j << ": " << curr->children[j]->count << endl;

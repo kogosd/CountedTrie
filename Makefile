@@ -8,6 +8,8 @@ CXXFLAGS := -Wall -Wextra -std=c++2a
 SRC := countedtrie.cpp test.cpp
 EXECUTABLE := countedtrie
 HEADER := util.h
+OBJ := $(SRC:.cpp=.o)  # Object files
+
 
 # Default target
 all: $(EXECUTABLE)
@@ -15,6 +17,10 @@ all: $(EXECUTABLE)
 # Rule to build the executable
 $(EXECUTABLE): $(SRC) 
 	$(CXX) $(CXXFLAGS) $^ -o $@
+
+# Rule to generate object files
+%.o: %.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Clean target to remove the executable
 clean:

@@ -3,7 +3,7 @@
 
 void testMedian() {
   srand(time(NULL));
-  CountedTrie ct;
+  CountedTrie<10> ct;
   for (int i = 0; i < 10; ++i) ct.add(i);
 
   if (debug) ct.print();
@@ -18,7 +18,7 @@ void testMedian() {
 
 void testPercentile() {
   srand(time(NULL));
-  CountedTrie ct;
+  CountedTrie<10> ct;
   for (int i = 0; i < 10; ++i) ct.add(i);
 
   if (debug) ct.print();
@@ -32,11 +32,13 @@ void testPercentile() {
   }
 }
 
+
+
 void testFind() {
   int COUNT {1'000'000};
   cout << "populating " << COUNT << " trie\n";
   srand(time(NULL));
-  CountedTrie ct;
+  CountedTrie<10> ct;
   for (int i = 0; i < COUNT; ++i) ct.add(i);
   ct.add(1000);
   ct.add(1000);
