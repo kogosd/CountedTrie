@@ -16,7 +16,10 @@ int main(int argc, char **argv) {
   //test current feature
   srand(time(NULL));
   CountedTrie<18> ct;
-  for (int i = 0; i < 10'000'000; ++i) ct.add(rand()%100);
+  for (int i = 0; i < 10'000'000; ++i) {
+    ct.add(rand()%100);
+    cout << i << ", Median: " << ct.median() << endl;
+  }
 
   uint64_t target = 25;
   auto t1 = getNanos();  
